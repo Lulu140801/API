@@ -1,6 +1,11 @@
 const express = require('express');
 const db = require('./models/index');
 const app = express();
+app.use(express.json());
+
+
+app.use('/users', require('./routers/user'));
+
 
 db.instance.sync({force: true}).then(() => {
     console.log('Database connected');
