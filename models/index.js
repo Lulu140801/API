@@ -1,5 +1,9 @@
 const { Sequelize } = require("sequelize");
-const dbConfig = require('../db.config.js');
+
+const dbConfig = module.exports = {
+    dialect: "sqlite",
+    storage: "./mydb.sqlite"
+}
 
 const instance = new Sequelize({
     dialect: dbConfig.dialect,
@@ -8,6 +12,6 @@ const instance = new Sequelize({
 
 module.exports = {
     instance,
-    marques: require('./voiture.js')(instance),
-    disponible: require('./user.js')(instance)
+    users: require('./users.js')(instance),
+    cars: require('./cars.js')(instance)
 };

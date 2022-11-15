@@ -1,14 +1,17 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (instance) => {
-    return instance.define('voiture', {
-        disponible: {
+    return instance.define('users', {
+        token: {
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
+            primaryKey: true,
+            allowNull: false
+        },
+        user: {
             type: DataTypes.STRING,
         },
-        marques: {
-            type: DataTypes.STRING,
-        },
-        modeles: {
+        password: {
             type: DataTypes.STRING,
         }
     }, {
