@@ -9,5 +9,6 @@ const instance = new Sequelize({
 module.exports = {
     instance,
     marques: require('./voiture.js')(instance),
-    disponible: require('./user.js')(instance)
+    disponible: require('./user.js')(instance),
+    users: require('./user')(instance)
 };
