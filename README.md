@@ -1,15 +1,15 @@
-Idée principale : Outils de gestion d'une agence de voiture de location avec la possibilité de voirs les les marques, les modèles de voitures disponibles et les utilisateurs qui l'utilise. 
+Idée principale : Outils de gestion d'une agence de voiture de location avec la possibilité de voirs les marques, les modèles de voitures disponibles et les utilisateurs qui l'utilise. 
 
-User : on va permettre de pouvoir créer un comprofil et s'enregistrer pour mettre la location de véhicule 
+User : on va permettre de pouvoir créer un profil et s'enregistrer pour mettre la location de véhicule 
 
-L'import d'une API externe va nous permettre de savoir les frais de circulation en rentrant une entrée et une sortie de la ville de départ/arrivée selon le kilométrage.
+L'import d'une API externe va nous permettre de savoir les frais de circulation en rentrant une entrée et une sortie de la ville de départ/arrivée selon le kilométrage de la voiture.
 
 Service : users.js / marque.js / modele.js 
   Marque.js : contiendra les marques disponibles des voitures 
   Modèle.js : contiendra les modèles disponible selon les marques avec leur kilomètre et l'année du véhicule avec l'id
   User.js : contiendra les utilisateurs des voitures avec leur Nom/Prénom/Date de naissance ainsi que leur id
   
-Controler : user.js / marque.js / modele.js / axios.js ? 
+Controler : user.js / marque.js / modele.js / axios.js 
 
 Router : user.js / marque.js / modele.js 
 
@@ -24,7 +24,7 @@ Pour l'utilisation des tokens, installer le commande ci dessous
 /// npm install jsonwebtoken
 
 
-BASE DE DONNEES : géré avec mysqlite et dbeaver 
+BASE DE DONNEES : géré avec sqlite3 et dbeaver 
 
 CHOSES A FAIRE : 
  - Ne pas renvoyer de MDP quand on post le mdp, meme haché 
