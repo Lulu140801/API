@@ -8,7 +8,7 @@ const instance = new Sequelize({
 
 module.exports = {
     instance,
-    users: require('./users')(instance),
-    cars: require('./cars')(instance),
-    modeles: require('./modeles')(instance)
+    Users: require('./users')(instance),
+    Cars: require('./cars')(instance),
+    Modeles: require('./modeles')(instance)
 };

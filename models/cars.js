@@ -1,17 +1,16 @@
-const Sequelize = require('sequelize');
-const db = require('./index');
+const { DataTypes } = require('sequelize');
 
 module.exports = (instance) => {
     return instance.define('cars', {
         id: {
-            field: 'carsId',
-            type: Sequelize.INTEGER,
+            field: 'CarsId',
+            type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
         name: {
             field: 'name',
-            type: Sequelize.STRING,
+            type: DataTypes.STRING,
             validate: {
                 notEmpty: {
                     args: true,

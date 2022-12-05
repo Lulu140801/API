@@ -1,12 +1,12 @@
-const Playlist = require('../models/playlist');
+const {Modeles} = require("../models/index")
 const express = require('express'),
     router = express.Router()
 
 router.delete('/:id', function (request, response) {
     let { id } = request.params;
 
-    Playlist.findByPk(id).then((playlist) => {
-        playlist.destroy().then(() => {
+    Modeles.findByPk(id).then((modeles) => {
+        modeles.destroy().then(() => {
             response.status(204).send();
         });
     });
@@ -17,10 +17,10 @@ router.delete('*', function (request, response) {
 });
 
 router.post('/', function (request, response) {
-    Playlist.create({
+    Modeles.create({
         name: request.body.name
-    }).then((playlists) => {
-        response.json(playlists);
+    }).then((modeles) => {
+        response.json(modeles);
     }, (validation) => {
         response.status(400).json({
             errors: validation.errors.map((error) => {
@@ -38,17 +38,17 @@ router.post('*', function (request, response) {
 });
 
 router.get('/', function (request, response) {
-    Playlist.findAll().then((playlists) => {
-        response.json(playlists);
+    Modeles.findAll().then((modeles) => {
+        response.json(modeles);
     });
 });
 
 router.get('/:id', function (request, response) {
     let { id } = request.params;
 
-    Playlist.findByPk(id).then((playlist) => {
-        if (playlist) {
-            response.json(playlist);
+    Modeles.findByPk(id).then((modeles) => {
+        if (modeles) {
+            response.json(modeles);
         } else {
             response.status(404).send();
         }
