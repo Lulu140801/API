@@ -1,13 +1,13 @@
 openapi: 3.0.1
 info:
-  title: "Concord API"
-  version: "0.1"
-  description: |
-    Allows management of users, characters, messages and other stuff related to the Concord interactive experiment.
+  title: MotorsportBack63sAmg 4matic mercedens dans la benz benz benz.
+  version: '0.1'
+  description: >
+    Allows management of users, characters, messages and other stuff related to
+    the Concord interactive experiment.
   contact:
-    name: Maxime Bécu-Métailler
+    name: Théo Garcia Lucas Lagnès Clément Marty
     email: contact.mbm@protonmail.com
-    url: https://anorak-lab.web.app/
 paths:
   /:
     get:
@@ -15,7 +15,7 @@ paths:
         Main entry point of the API.
         Returns some informations about the status.
       responses:
-        200:
+        '200':
           description: |
             API is up and running.
           content:
@@ -34,7 +34,7 @@ paths:
                     example: OK
                   author:
                     type: string
-                    example: Anorak
+                    example: user1
                   api_version:
                     type: string
                     example: v0.1
@@ -44,13 +44,13 @@ paths:
                   db_connection:
                     type: boolean
                     example: true
-        400:
+        '400':
           $ref: '#/components/responses/SyntaxError'
-        401:
+        '401':
           $ref: '#/components/responses/UnauthorizedError'
-        404:
+        '404':
           $ref: '#/components/responses/NotFoundError'
-        500:
+        '500':
           $ref: '#/components/responses/ServerError'
   /cache:
     get:
@@ -67,7 +67,7 @@ paths:
             description: |
               Action to perform on server cache
       responses:
-        200:
+        '200':
           description: |
             Succesfull action on cache.
           content:
@@ -84,37 +84,26 @@ paths:
                   action:
                     type: string
                     example: reset
-        400:
+        '400':
           $ref: '#/components/responses/SyntaxError'
-        401:
+        '401':
           $ref: '#/components/responses/UnauthorizedError'
-        404:
+        '404':
           $ref: '#/components/responses/NotFoundError'
-        500:
+        '500':
           $ref: '#/components/responses/ServerError'
-  /auth:
-    post:
+  /users:
+    get:
       tags:
-        - auth
+        - users
       description: |
-        Authentication endpoint.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                user_name:
-                  type: string
-                password:
-                  format: password
-                  type: string
+        Get registered users.
+      security:
+        - AdminAuth: []
       responses:
-        200:
+        '200':
           description: |
-            Succesfully authentified user.
-            Return a connection token.
+            Succesfully required list of registered users.
           content:
             application/json:
               schema:
@@ -125,54 +114,16 @@ paths:
                     example: true
                   message:
                     type: string
-                    example: authentified user
-                  data:
-                    type: object
-                    properties:
-                      user:
-                        $ref: '#/components/schemas/User'
-                      token:
-                        type: string
-        400:
-          $ref: '#/components/responses/SyntaxError'
-        401:
-          $ref: '#/components/responses/UnauthorizedError'
-        404:
-          $ref: '#/components/responses/NotFoundError'
-        500:
-          $ref: '#/components/responses/ServerError'
-  /users:
-    get:
-      tags: 
-        - users
-      description: |
-        Get registered users.
-      security:
-        - AdminAuth: []
-      responses:
-        200:
-          description: |
-            Succesfully required list of registered users.
-          content: 
-            application/json:
-              schema: 
-                type: object
-                properties: 
-                  success:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
                     example: requested users list
                   data:
                     type: array
                     items:
                       $ref: '#/components/schemas/User'
-        401:
+        '401':
           $ref: '#/components/responses/UnauthorizedError'
-        404:
+        '404':
           $ref: '#/components/responses/NotFoundError'
-        500:
+        '500':
           $ref: '#/components/responses/ServerError'
     post:
       tags:
@@ -186,8 +137,8 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/User'
-      responses: 
-        201:
+      responses:
+        '201':
           description: |
             Succesfully registered a new user.
           content:
@@ -203,11 +154,11 @@ paths:
                     example: registered a new user
                   data:
                     $ref: '#/components/schemas/User'
-        400:
+        '400':
           $ref: '#/components/responses/SyntaxError'
-        401:
+        '401':
           $ref: '#/components/responses/UnauthorizedError'
-        500:
+        '500':
           $ref: '#/components/responses/ServerError'
   /users/{member_id}:
     get:
@@ -216,7 +167,7 @@ paths:
       description: |
         Retrieve the user with the specified ID.
       security:
-        - UserAuth: [] 
+        - UserAuth: []
       parameters:
         - in: path
           name: member_id
@@ -225,28 +176,28 @@ paths:
           required: true
           description: String ID of the user/member to get
       responses:
-        200:
+        '200':
           description: |
             Succesfully requested user.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-        400:
+        '400':
           $ref: '#/components/responses/SyntaxError'
-        401:
+        '401':
           $ref: '#/components/responses/UnauthorizedError'
-        404:
+        '404':
           $ref: '#/components/responses/NotFoundError'
-        500:
+        '500':
           $ref: '#/components/responses/ServerError'
     patch:
-      tags: 
+      tags:
         - users
       description: |
         Update the user informations.
       security:
-        - UserAuth: [] 
+        - UserAuth: []
       parameters:
         - in: path
           name: member_id
@@ -269,7 +220,7 @@ paths:
                 score:
                   type: integer
       responses:
-        200:
+        '200':
           description: |
             Updated user informations succesfully.
           content:
@@ -285,13 +236,13 @@ paths:
                     example: user updated
                   data:
                     $ref: '#/components/schemas/User'
-        400:
+        '400':
           $ref: '#/components/responses/SyntaxError'
-        401:
+        '401':
           $ref: '#/components/responses/UnauthorizedError'
-        404:
+        '404':
           $ref: '#/components/responses/NotFoundError'
-        500:
+        '500':
           $ref: '#/components/responses/ServerError'
     delete:
       tags:
@@ -308,7 +259,7 @@ paths:
           required: true
           description: String ID of the user/member to delete
       responses:
-        200:
+        '200':
           description: |
             Succesfully removed player from database.
           content:
@@ -324,27 +275,26 @@ paths:
                     example: removed user
                   data:
                     $ref: '#/components/schemas/User'
-        400:
+        '400':
           $ref: '#/components/responses/SyntaxError'
-        401:
+        '401':
           $ref: '#/components/responses/UnauthorizedError'
-        404:
+        '404':
           $ref: '#/components/responses/NotFoundError'
-        500:
+        '500':
           $ref: '#/components/responses/ServerError'
-  /characters:
+  /Modeles:
     get:
       tags:
-        - characters
+        - Modeles
       description: |
-        Get the list of all characters.
+        Get a list of all Modeles.
       security:
-        - AdminAuth: [] 
+        - AdminAuth: []
       responses:
-        200:
+        '200':
           description: |
-            Succesfully retrieve the list of characters. 
-            An empty set of characters also returns a 200 status code.
+            Request an array containing all the Modeles.
           content:
             application/json:
               schema:
@@ -355,231 +305,24 @@ paths:
                     example: true
                   message:
                     type: string
-                    example: retrieved characters
+                    example: requested all Modeles
                   data:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Character'
-        400:
+                      $ref: '#/components/schemas/Modeles'
+        '400':
           $ref: '#/components/responses/SyntaxError'
-        401:
+        '401':
           $ref: '#/components/responses/UnauthorizedError'
-        404:
+        '404':
           $ref: '#/components/responses/NotFoundError'
-        500:
+        '500':
           $ref: '#/components/responses/ServerError'
     post:
       tags:
-        - characters
+        - Modeles
       description: |
-        Create a new character.
-      security:
-        - AdminAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Character'
-      responses:
-        201:
-          description: |
-            Succesfully created new character for user.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
-                    example: create new character
-                  data:
-                    $ref: '#/components/schemas/Character'
-        400:
-          $ref: '#/components/responses/SyntaxError'
-        401:
-          $ref: '#/components/responses/UnauthorizedError'
-        404:
-          $ref: '#/components/responses/NotFoundError'
-        500:
-          $ref: '#/components/responses/ServerError'
-  /characters/{id}:
-    get:
-      tags:
-        - characters
-      description: |
-        Get a the specified character from specified ID.
-      security:
-        - UserAuth: []
-      parameters:
-        - in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: |
-            Numeric ID of the character to get.
-      responses:
-        200:
-          description: |
-            New caracter created.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
-                    example: requested character
-                  data:
-                    $ref: '#/components/schemas/Character'
-        400:
-          $ref: '#/components/responses/SyntaxError'
-        401:
-          $ref: '#/components/responses/UnauthorizedError'
-        404:
-          $ref: '#/components/responses/NotFoundError'
-        500:
-          $ref: '#/components/responses/ServerError'
-    patch:
-      tags:
-        - characters
-      description: |
-        Update the specified character informations.
-      security:
-        - UserAuth: []
-      parameters:
-        - in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: |
-            Numeric ID of the character to update.
-      requestBody:
-        content: 
-          application/json:
-            schema: 
-              type: object
-              properties:
-                user_id:
-                  type: integer
-                name:
-                  type: string
-                location:
-                  type: integer
-                inventory:
-                  type: object
-      responses:
-        200:
-          description: |
-            Succesfully edited character.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
-                    example: updated character informations
-                  data:
-                    $ref: '#/components/schemas/Character'
-        400:
-          $ref: '#/components/responses/SyntaxError'
-        401:
-          $ref: '#/components/responses/UnauthorizedError'
-        404:
-          $ref: '#/components/responses/NotFoundError'
-        500:
-          $ref: '#/components/responses/ServerError'
-    delete:
-      tags:
-        - characters
-      description: |
-        Delete the specified character.
-      security:
-        - AdminAuth: []
-      parameters:
-        - in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-          description: |
-            Numeric ID of the character to delete.
-      responses:
-        200:
-          description: |
-            Deleted character with success.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
-                    example: deleted character
-                  data:
-                    $ref: '#/components/schemas/Character'
-        400:
-          $ref: '#/components/responses/SyntaxError'
-        401:
-          $ref: '#/components/responses/UnauthorizedError'
-        404:
-          $ref: '#/components/responses/NotFoundError'
-        500:
-          $ref: '#/components/responses/ServerError'
-  /rooms:
-    get:
-      tags:
-        - rooms
-      description: |
-        Get a list of all rooms.
-      security:
-        - AdminAuth: []
-      responses:
-        200:
-          description: |
-            Request an array containing all the rooms.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
-                    example: requested all rooms
-                  data:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Room'
-        400:
-          $ref: '#/components/responses/SyntaxError'
-        401:
-          $ref: '#/components/responses/UnauthorizedError'
-        404:
-          $ref: '#/components/responses/NotFoundError'
-        500:
-          $ref: '#/components/responses/ServerError'
-    post:
-      tags:
-        - rooms
-      description: |
-        Create a new room associated with a Discord channel. This request will trigger an API call to Discord's endpoint and create a new channel on specified Guild.
+        Create a name of the 'Modeles'
       security:
         - AdminAuth: []
       requestBody:
@@ -589,7 +332,7 @@ paths:
             schema:
               type: object
               required:
-                - guild_id
+                - id
                 - name
               properties:
                 guild_id:
@@ -599,9 +342,9 @@ paths:
                 description:
                   type: string
       responses:
-        201:
+        '201':
           description: |
-            Succesfully created a new room.
+            Succesfully created a new Modeles.
           content:
             application/json:
               schema:
@@ -612,35 +355,35 @@ paths:
                     example: true
                   message:
                     type: string
-                    example: create a new room
+                    example: create a new Modeles
                   data:
-                    $ref: '#/components/schemas/Room'
-        400:
+                    $ref: '#/components/schemas/Modeles'
+        '400':
           $ref: '#/components/responses/SyntaxError'
-        401:
+        '401':
           $ref: '#/components/responses/UnauthorizedError'
-        404:
+        '404':
           $ref: '#/components/responses/NotFoundError'
-        500:
+        '500':
           $ref: '#/components/responses/ServerError'
-  /rooms/{channel_id}:
+  /Modeles/{id}:
     get:
       tags:
-        - rooms
+        - Marques
       description: |
-        Require room by it's ID.
+        Require Marques by it's ID.
       security:
         - AdminAuth: []
       parameters:
         - in: path
-          name: channel_id
+          name: id
           schema:
             type: string
           required: true
           description: |
-            String ID of the channel/room to get.
+            String ID of the /Marques to get.
       responses:
-        200:
+        '200':
           description: |
             Success
           content:
@@ -653,22 +396,22 @@ paths:
                     example: true
                   message:
                     type: string
-                    example: required room
+                    example: required Marques
                   data:
-                    $ref: '#/components/schemas/Room'
-        400:
+                    $ref: '#/components/schemas/Marques'
+        '400':
           $ref: '#/components/responses/SyntaxError'
-        401:
+        '401':
           $ref: '#/components/responses/UnauthorizedError'
-        404:
+        '404':
           $ref: '#/components/responses/NotFoundError'
-        500:
+        '500':
           $ref: '#/components/responses/ServerError'
     patch:
       tags:
-        - rooms
+        - Modeles
       description: |
-        Update specified room informations.
+        Update specified Marques informations.
         This request may also trigger a Discord API call.
       security:
         - AdminAuth: []
@@ -679,9 +422,9 @@ paths:
             type: string
           required: true
           description: |
-            String ID of the channel/room to patch.
+            String ID of the name/Marques to patch.
       responses:
-        200:
+        '200':
           description: |
             Success
           content:
@@ -694,22 +437,22 @@ paths:
                     example: true
                   message:
                     type: string
-                    example: updated room
+                    example: updated Marques
                   data:
-                    $ref: '#/components/schemas/Room'
-        400:
+                    $ref: '#/components/schemas/Marques'
+        '400':
           $ref: '#/components/responses/SyntaxError'
-        401:
+        '401':
           $ref: '#/components/responses/UnauthorizedError'
-        404:
+        '404':
           $ref: '#/components/responses/NotFoundError'
-        500:
+        '500':
           $ref: '#/components/responses/ServerError'
     delete:
       tags:
-        - rooms
+        - Modeles
       description: |
-        Delete the specified room.
+        Delete the specified Marques.
         This request will also trigger a Discord API call.
       security:
         - AdminAuth: []
@@ -720,9 +463,9 @@ paths:
             type: string
           required: true
           description: |
-            String ID of the channel/room to delete.
+            String ID of the channel/Marques to delete.
       responses:
-        200:
+        '200':
           description: |
             Success
           content:
@@ -735,22 +478,145 @@ paths:
                     example: true
                   message:
                     type: string
-                    example: removed room
+                    example: removed Marques
                   data:
-                    $ref: '#/components/schemas/Room'
-        400:
+                    $ref: '#/components/schemas/Marques'
+        '400':
           $ref: '#/components/responses/SyntaxError'
-        401:
+        '401':
           $ref: '#/components/responses/UnauthorizedError'
-        404:
+        '404':
           $ref: '#/components/responses/NotFoundError'
-        500:
+        '500':
           $ref: '#/components/responses/ServerError'
-components: 
-  schemas: 
+  /Marques/{id}:
+    get:
+      tags:
+        - Marques
+      description: |
+        Require Marques by it's ID.
+      security:
+        - AdminAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: |
+            String ID of the /Marques to get.
+      responses:
+        '200':
+          description: |
+            Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: required Marques
+                  data:
+                    $ref: '#/components/schemas/Marques'
+        '400':
+          $ref: '#/components/responses/SyntaxError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    patch:
+      tags:
+        - Marques
+      description: |
+        Update specified Marques informations.
+        This request may also trigger a Discord API call.
+      security:
+        - AdminAuth: []
+      parameters:
+        - in: path
+          name: channel_id
+          schema:
+            type: string
+          required: true
+          description: |
+            String ID of the name/Marques to patch.
+      responses:
+        '200':
+          description: |
+            Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: updated Marques
+                  data:
+                    $ref: '#/components/schemas/Marques'
+        '400':
+          $ref: '#/components/responses/SyntaxError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    delete:
+      tags:
+        - Marques
+      description: |
+        Delete the specified Marques.
+        This request will also trigger a Discord API call.
+      security:
+        - AdminAuth: []
+      parameters:
+        - in: path
+          name: channel_id
+          schema:
+            type: string
+          required: true
+          description: |
+            String ID of the channel/Marques to delete.
+      responses:
+        '200':
+          description: |
+            Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: removed Marques
+                  data:
+                    $ref: '#/components/schemas/Marques'
+        '400':
+          $ref: '#/components/responses/SyntaxError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+components:
+  schemas:
     User:
       type: object
-      properties: 
+      properties:
         member_id:
           readOnly: true
           type: string
@@ -771,39 +637,40 @@ components:
           type: integer
     Character:
       type: object
-      properties: 
+      properties:
         id:
           readOnly: true
           type: integer
         user_id:
           type: integer
-          description: |
-            A user can have multiple character in different guild, so he can play on different Discord servers.
+          description: >
+            A user can have multiple character in different guild, so he can
+            play on different Discord servers.
           example: 1
         name:
           type: string
-          example: 'Edward D. Teach'
+          example: Edward D. Teach
         location:
           type: integer
           description: |
-            The Room ID in which the character is.
+            The Marques ID in which the character is.
         connected:
           type: boolean
           example: true
         inventory:
           type: object
           example: {}
-    Room:
+    Marques:
       type: object
       properties:
         guild_id:
           readOnly: true
           type: string
-          example: 191237328927195147
+          example: 191237328927195140
         channel_id:
           readOnly: true
           type: string
-          example: 1046314014055071794
+          example: 1046314014055071700
         name:
           type: string
           example: The Hall
@@ -822,7 +689,7 @@ components:
         data:
           type: object
           properties:
-            code: 
+            code:
               type: integer
             trace:
               type: string
@@ -865,7 +732,7 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
     ServerError:
-      description: |
+      description: ''
       content:
         application/json:
           schema:
