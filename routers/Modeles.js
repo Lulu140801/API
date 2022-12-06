@@ -1,6 +1,6 @@
 const {Modeles} = require("../models/index")
 const express = require('express'),
-    router = express.Router()
+router = express.Router()
 
 router.delete('/:id', function (request, response) {
     let { id } = request.params;

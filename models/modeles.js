@@ -17,6 +17,26 @@ module.exports = (instance) => {
                     msg: 'name cannot be empty'
                 }
             }
+        },
+        marques: {
+            field: 'name',
+            type: DataTypes.NUMBER,
+            validate: {
+                notEmpty: {
+                    args: true,
+                    msg: 'name cannot be empty'
+                }
+            }
+        },
+        disponible: {
+            field: 'name',
+            type: DataTypes.STRING,
+            validate: {
+                notEmpty: {
+                    args: true,
+                    msg: 'name cannot be empty'
+                }
+            }
         }
     }, {
         timestamps: false

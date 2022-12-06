@@ -1,6 +1,6 @@
 const {Cars} = require("../models/index")
 const express = require('express'),
-    router = express.Router()
+router = express.Router()
 
 router.delete('/:id', function (request, response) {
     let { id } = request.params;
@@ -12,7 +12,7 @@ router.delete('/:id', function (request, response) {
     });
 });
 
-router.delete('*', function (request, response) {
+router.delete('/*', function (request, response) {
     response.status(404).send();
 });
 
@@ -33,7 +33,7 @@ router.post('/', function (request, response) {
     });
 });
 
-router.post('*', function (request, response) {
+router.post('/*', function (request, response) {
     response.status(404).send();
 });
 
@@ -55,7 +55,23 @@ router.get('/:id', function (request, response) {
     });
 });
 
-router.get('*', function (request, response) {
+// router.get('/:marques', function (request, response) {
+//     let { marques } = request.params;
+
+//     Cars.findAll({
+//         where: {
+//             name:marques
+//         }
+//       }).then((cars) => {
+//         if (cars) {
+//             response.json(cars);
+//         } else {
+//             response.status(406).send();
+//         }
+//     });
+// });
+
+router.get('/*', function (request, response) {
     response.status(404).send();
 });
 
@@ -85,7 +101,7 @@ router.patch('/:id', function (request, response) {
     });
 });
 
-router.patch('*', function (request, response) {
+router.patch('/*', function (request, response) {
     response.status(404).send();
 });
 

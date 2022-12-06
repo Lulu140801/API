@@ -309,7 +309,7 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Modeles'
+                      $ref: '#/Modeles'
         '400':
           $ref: '#/components/responses/SyntaxError'
         '401':
@@ -357,7 +357,7 @@ paths:
                     type: string
                     example: create a new Modeles
                   data:
-                    $ref: '#/components/schemas/Modeles'
+                    $ref: '#/Modeles'
         '400':
           $ref: '#/components/responses/SyntaxError'
         '401':
