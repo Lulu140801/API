@@ -56,8 +56,6 @@ paths:
     get:
       description: |
         Endpoint to handle cache actions.
-      security:
-        - AdminAuth: []
       parameters:
         - in: query
           name: action
@@ -98,8 +96,6 @@ paths:
         - users
       description: |
         Get registered users.
-      security:
-        - AdminAuth: []
       responses:
         '200':
           description: |
@@ -130,8 +126,6 @@ paths:
         - users
       description: |
         Register a new user.
-      security:
-        - AdminAuth: []
       requestBody:
         content:
           application/json:
@@ -249,8 +243,6 @@ paths:
         - users
       description: |
         Removes a player from database.
-      security:
-        - AdminAuth: []
       parameters:
         - in: path
           name: member_id
@@ -289,8 +281,6 @@ paths:
         - Modeles
       description: |
         Get a list of all Modeles.
-      security:
-        - AdminAuth: []
       responses:
         '200':
           description: |
@@ -309,7 +299,7 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: '#/Modeles'
+                      $ref: '#/components/schemas/Modeles'
         '400':
           $ref: '#/components/responses/SyntaxError'
         '401':
@@ -323,8 +313,6 @@ paths:
         - Modeles
       description: |
         Create a name of the 'Modeles'
-      security:
-        - AdminAuth: []
       requestBody:
         required: true
         content:
@@ -357,7 +345,7 @@ paths:
                     type: string
                     example: create a new Modeles
                   data:
-                    $ref: '#/Modeles'
+                    $ref: '#/components/schemas/Modeles'
         '400':
           $ref: '#/components/responses/SyntaxError'
         '401':
@@ -372,8 +360,6 @@ paths:
         - Marques
       description: |
         Require Marques by it's ID.
-      security:
-        - AdminAuth: []
       parameters:
         - in: path
           name: id
@@ -413,8 +399,6 @@ paths:
       description: |
         Update specified Marques informations.
         This request may also trigger a Discord API call.
-      security:
-        - AdminAuth: []
       parameters:
         - in: path
           name: channel_id
@@ -454,8 +438,6 @@ paths:
       description: |
         Delete the specified Marques.
         This request will also trigger a Discord API call.
-      security:
-        - AdminAuth: []
       parameters:
         - in: path
           name: channel_id
@@ -495,8 +477,6 @@ paths:
         - Marques
       description: |
         Require Marques by it's ID.
-      security:
-        - AdminAuth: []
       parameters:
         - in: path
           name: id
@@ -536,8 +516,6 @@ paths:
       description: |
         Update specified Marques informations.
         This request may also trigger a Discord API call.
-      security:
-        - AdminAuth: []
       parameters:
         - in: path
           name: channel_id
@@ -577,8 +555,6 @@ paths:
       description: |
         Delete the specified Marques.
         This request will also trigger a Discord API call.
-      security:
-        - AdminAuth: []
       parameters:
         - in: path
           name: channel_id
@@ -660,6 +636,18 @@ components:
         inventory:
           type: object
           example: {}
+    Modeles:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Seat Ibiza"
+        marques:
+          type: string
+          example: "Seat"
     Marques:
       type: object
       properties:
@@ -694,11 +682,7 @@ components:
             trace:
               type: string
   securitySchemes:
-    UserAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
-    AdminAuth:
+    MainAuth:
       type: http
       scheme: bearer
       bearerFormat: JWT

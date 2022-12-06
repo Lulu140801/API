@@ -18,7 +18,8 @@ router.delete('*', function (request, response) {
 
 router.post('/', function (request, response) {
     Modeles.create({
-        name: request.body.name
+        name: request.body.name,
+        marques: request.body.marques
     }).then((modeles) => {
         response.json(modeles);
     }, (validation) => {
@@ -38,12 +39,14 @@ router.post('*', function (request, response) {
 });
 
 router.get('/', function (request, response) {
+    console.log("GET /Modeles/ endpoint");
     Modeles.findAll().then((modeles) => {
         response.json(modeles);
     });
 });
 
 router.get('/:id', function (request, response) {
+    console.log("GET /Modeles/:id endpoint");
     let { id } = request.params;
 
     Modeles.findByPk(id).then((modeles) => {
@@ -56,6 +59,7 @@ router.get('/:id', function (request, response) {
 });
 
 router.get('*', function (request, response) {
+    console.log("GET /Modeles/* endpoint");
     response.status(404).send();
 });
 
