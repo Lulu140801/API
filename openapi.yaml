@@ -7,89 +7,8 @@ info:
     the Concord interactive experiment.
   contact:
     name: Théo Garcia Lucas Lagnès Clément Marty
-    email: contact.mbm@protonmail.com
+    email: contact.mba@protonmail.com
 paths:
-  /:
-    get:
-      description: |
-        Main entry point of the API.
-        Returns some informations about the status.
-      responses:
-        '200':
-          description: |
-            API is up and running.
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - status
-                  - author
-                  - api_version
-                  - server_time
-                  - db_connection
-                properties:
-                  status:
-                    type: string
-                    example: OK
-                  author:
-                    type: string
-                    example: user1
-                  api_version:
-                    type: string
-                    example: v0.1
-                  server_time:
-                    type: string
-                    format: date-time
-                  db_connection:
-                    type: boolean
-                    example: true
-        '400':
-          $ref: '#/components/responses/SyntaxError'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '404':
-          $ref: '#/components/responses/NotFoundError'
-        '500':
-          $ref: '#/components/responses/ServerError'
-  /cache:
-    get:
-      description: |
-        Endpoint to handle cache actions.
-      parameters:
-        - in: query
-          name: action
-          schema:
-            type: string
-            example: reset
-            description: |
-              Action to perform on server cache
-      responses:
-        '200':
-          description: |
-            Succesfull action on cache.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
-                    example: cache as been reset
-                  action:
-                    type: string
-                    example: reset
-        '400':
-          $ref: '#/components/responses/SyntaxError'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '404':
-          $ref: '#/components/responses/NotFoundError'
-        '500':
-          $ref: '#/components/responses/ServerError'
   /users:
     get:
       tags:
@@ -160,8 +79,6 @@ paths:
         - users
       description: |
         Retrieve the user with the specified ID.
-      security:
-        - UserAuth: []
       parameters:
         - in: path
           name: member_id
@@ -190,8 +107,6 @@ paths:
         - users
       description: |
         Update the user informations.
-      security:
-        - UserAuth: []
       parameters:
         - in: path
           name: member_id
@@ -357,7 +272,7 @@ paths:
   /Modeles/{id}:
     get:
       tags:
-        - Marques
+        - Modeles
       description: |
         Require Marques by it's ID.
       parameters:
@@ -401,7 +316,7 @@ paths:
         This request may also trigger a Discord API call.
       parameters:
         - in: path
-          name: channel_id
+          name: id
           schema:
             type: string
           required: true
@@ -463,6 +378,85 @@ paths:
                     example: removed Marques
                   data:
                     $ref: '#/components/schemas/Marques'
+        '400':
+          $ref: '#/components/responses/SyntaxError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /Marques:
+    get:
+      tags:
+        - Marques
+      description: |
+        Get a list of all Modeles.
+      responses:
+        '200':
+          description: |
+            Request an array containing all the Modeles.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: requested all Modeles
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Modeles'
+        '400':
+          $ref: '#/components/responses/SyntaxError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    post:
+      tags:
+        - Marques
+      description: |
+        Create a name of the 'Modeles'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+                - name
+              properties:
+                guild_id:
+                  type: integer
+                name:
+                  type: string
+                description:
+                  type: string
+      responses:
+        '201':
+          description: |
+            Succesfully created a new Modeles.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  succes:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: create a new Modeles
+                  data:
+                    $ref: '#/components/schemas/Modeles'
         '400':
           $ref: '#/components/responses/SyntaxError'
         '401':
@@ -518,7 +512,7 @@ paths:
         This request may also trigger a Discord API call.
       parameters:
         - in: path
-          name: channel_id
+          name: id
           schema:
             type: string
           required: true
@@ -557,7 +551,7 @@ paths:
         This request will also trigger a Discord API call.
       parameters:
         - in: path
-          name: channel_id
+          name: id
           schema:
             type: string
           required: true
@@ -580,6 +574,39 @@ paths:
                     example: removed Marques
                   data:
                     $ref: '#/components/schemas/Marques'
+        '400':
+          $ref: '#/components/responses/SyntaxError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /{name}:
+    get:
+      tags:
+        - Choix
+      description: |
+        Get a list of all Modeles.
+      responses:
+        '200':
+          description: |
+            Request an array containing all the Modeles.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: requested all Modeles
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Modeles'
         '400':
           $ref: '#/components/responses/SyntaxError'
         '401':
@@ -611,31 +638,6 @@ components:
           type: string
         score:
           type: integer
-    Character:
-      type: object
-      properties:
-        id:
-          readOnly: true
-          type: integer
-        user_id:
-          type: integer
-          description: >
-            A user can have multiple character in different guild, so he can
-            play on different Discord servers.
-          example: 1
-        name:
-          type: string
-          example: Edward D. Teach
-        location:
-          type: integer
-          description: |
-            The Marques ID in which the character is.
-        connected:
-          type: boolean
-          example: true
-        inventory:
-          type: object
-          example: {}
     Modeles:
       type: object
       properties:
@@ -644,43 +646,19 @@ components:
           example: 1
         name:
           type: string
-          example: "Seat Ibiza"
+          example: "Ibiza"
         marques:
           type: string
           example: "Seat"
     Marques:
       type: object
       properties:
-        guild_id:
-          readOnly: true
-          type: string
-          example: 191237328927195140
-        channel_id:
-          readOnly: true
-          type: string
-          example: 1046314014055071700
+        id:
+          type: integer
+          example: 1
         name:
           type: string
-          example: The Hall
-        description:
-          type: string
-          example: Where all new adventurer arrives.
-    Error:
-      type: object
-      properties:
-        success:
-          type: boolean
-          example: false
-        message:
-          type: string
-          example: error with request
-        data:
-          type: object
-          properties:
-            code:
-              type: integer
-            trace:
-              type: string
+          example: "Seat"
   securitySchemes:
     MainAuth:
       type: http
@@ -693,31 +671,31 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: '#/components/schemas/Marques'
     UnauthorizedError:
       description: |
         Not Authorized. Need authentication or privilegied rights.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: '#/components/schemas/Marques'
     CantAuthentifyError:
       description: |
         Cannot authentify with those parameters.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: '#/components/schemas/Marques'
     NotFoundError:
       description: |
         Not found. Can't found this resource.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: '#/components/schemas/Marques'
     ServerError:
       description: ''
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: '#/components/schemas/Marques'
