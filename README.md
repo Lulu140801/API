@@ -24,8 +24,4 @@ Pour l'utilisation des tokens, installer le commande ci dessous
 /// npm install jsonwebtoken
 
 
-BASE DE DONNEES : géré avec sqlite3 et dbeaver 
-
-CHOSES A FAIRE : 
- - Ne pas renvoyer de MDP quand on post le mdp, meme haché 
- - 
+BASE DE DONNEES : géré avec sqlite3
